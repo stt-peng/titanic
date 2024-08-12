@@ -4,7 +4,7 @@ Machine Learning Engineer Challenge
 
 ## Development Requirements
 
-- Python3.11.0
+- Python3.10.0
 - Pip
 - Poetry (Python Package Manager)
 
