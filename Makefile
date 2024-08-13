@@ -33,11 +33,11 @@ run:
 	PYTHONPATH=app/ poetry run uvicorn main:app --reload --host 0.0.0.0 --port 8080
 
 deploy: generate_dot_env
-	docker-compose build
-	docker-compose up -d
+	docker compose build
+	docker compose up -d
 
 down:
-	docker-compose down
+	docker compose down
 
 generate_dot_env:
 	@if [[ ! -e .env ]]; then \
