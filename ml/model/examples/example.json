@@ -1,7 +1,14 @@
 {
-    "feature1": 1.0,
-    "feature2": 1.1,
-    "feature3": 1.2,
-    "feature4": 1.3,
-    "feature5": 1.4
+    "Pclass": [
+        3
+    ],
+    "SibSp": [
+        0
+    ],
+    "Parch": [
+        0
+    ],
+    "Sex": [
+        "male"
+    ]
 }
