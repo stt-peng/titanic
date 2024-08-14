@@ -1,10 +1,12 @@
-import numpy as np
+from typing import List
 
+import numpy as np
+import pandas as pd
 from pydantic import BaseModel
 
 
 class MachineLearningResponse(BaseModel):
-    prediction: float
+    prediction: List[int]
 
 
 class HealthResponse(BaseModel):
@@ -12,21 +14,25 @@ class HealthResponse(BaseModel):
 
 
 class MachineLearningDataInput(BaseModel):
-    feature1: float
-    feature2: float
-    feature3: float
-    feature4: float
-    feature5: float
+    Pclass: List[int]
+    SibSp: List[int]
+    Parch: List[int]
+    Sex: List[str]
 
-    def get_np_array(self):
-        return np.array(
-            [
-                [
-                    self.feature1,
-                    self.feature2,
-                    self.feature3,
-                    self.feature4,
-                    self.feature5,
-                ]
-            ]
+    def get_dataframe(self):
+        return pd.DataFrame(
+            {
+                "Pclass": self.Pclass,
+                "SibSp": self.SibSp,
+                "Parch": self.Parch,
+                "Sex_female": np.array(self.Sex) == 'female',
+                "Sex_male": np.array(self.Sex) == 'male'
+            }
         )
+
+
+class MachineLearningDataInputList(BaseModel):
+    PassengerId: List[int]
+
+    def get_data(self):
+        return self.PassengerId
