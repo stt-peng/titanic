@@ -7,26 +7,43 @@ name: Manual workflow
 on:
   workflow_dispatch:
     # Inputs the workflow accepts.
-    inputs:
-      name:
-        # Friendly description to be shown in the UI instead of 'name'
-        description: 'Person to greet'
-        # Default value if no value is explicitly provided
-        default: 'World'
-        # Input has to be provided for the workflow to run
-        required: true
-        # The data type of the input
-        type: string
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "greet"
-  greet:
+  train:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Runs a single command using the runners shell
-    - name: Send greeting
-      run: echo "Hello ${{ inputs.name }}"
+    - uses: actions/checkout@v4
+    - name: Create envfile
+      env:
+        ENV_FILE: ${{ secrets.ENV_FILE }}
+      run: |
+        echo $ENV_FILE | base64 --decode > .env
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+    - name: Install dependencies
+      run: |
+        make install
+    - name: Train model
+      run: |
+        make train
+    - uses: actions/upload-artifact@v4
+      with:
+        name: model
+        path: ml/model/model.pkl
+        retention-days: 30
+        compression-level: 0
+        overwrite: true
+    - uses: actions/upload-artifact@v4
+      with:
+        name: pred_data
+        path: data/results
+        retention-days: 30
+        compression-level: 0
+        overwrite: true
