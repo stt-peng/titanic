@@ -1,3 +1,5 @@
+"""Api logic
+"""
 import json
 from typing import Any
 
@@ -15,10 +17,23 @@ router = APIRouter()
 
 
 def get_prediction(data_point: pd.DataFrame) -> Any:
+    """Get prediction.
+
+    Args:
+        data_point (pd.DataFrame): _description_
+
+    Returns:
+        Any: _description_
+    """
     return model.predict(data_point, load_wrapper=joblib.load, method="predict")
 
 
 def get_test_data() -> pd.DataFrame:
+    """Load test data.
+
+    Returns:
+        pd.DataFrame: _description_
+    """
     return pd.read_csv("data/test.csv")
 
 
@@ -28,6 +43,18 @@ def get_test_data() -> pd.DataFrame:
     name="predict:get-data",
 )
 async def predict(data_input: MachineLearningDataInput):
+    """Predict responses.
+
+    Args:
+        data_input (MachineLearningDataInput): _description_
+
+    Raises:
+        HTTPException: _description_
+        HTTPException: _description_
+
+    Returns:
+        _type_: _description_
+    """
 
     if not data_input:
         raise HTTPException(
@@ -49,6 +76,14 @@ async def predict(data_input: MachineLearningDataInput):
     name="health:get-data",
 )
 async def health():
+    """Healthy method to test connection.
+
+    Raises:
+        HTTPException: _description_
+
+    Returns:
+        _type_: _description_
+    """
     is_health = False
     try:
         test_input = MachineLearningDataInput(
@@ -68,6 +103,19 @@ async def health():
     name="predict_id_list:get-data",
 )
 async def predict(data_input: MachineLearningDataInputList):
+    """Predict by id list of passengers.
+
+    Args:
+        data_input (MachineLearningDataInputList): _description_
+
+    Raises:
+        HTTPException: _description_
+        ValueError: _description_
+        HTTPException: _description_
+
+    Returns:
+        _type_: _description_
+    """
 
     if not data_input:
         raise HTTPException(

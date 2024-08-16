@@ -1,3 +1,5 @@
+"""Api errors
+"""
 class PredictException(BaseException):
     ...
 
