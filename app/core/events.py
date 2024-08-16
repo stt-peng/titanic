@@ -1,11 +1,15 @@
+"""Events.
+
+Returns:
+    _type_: _description_
+"""
 from typing import Callable
 
 from fastapi import FastAPI
 
 
 def preload_model():
-    """
-    In order to load model on memory to each worker
+    """In order to load model on memory to each worker
     """
     from services.predict import MachineLearningModelHandlerScore
 

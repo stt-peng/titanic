@@ -1,3 +1,5 @@
+"""App config file
+"""
 import sys
 import logging
 

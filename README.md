@@ -81,8 +81,10 @@ Application parts are:
     │   ├── features     - scripts to turn raw data into features for modeling
     │   │   └── build_features.py
     │   │
+    │   ├── preprocessing - scripts to preprocess data.
+    │   │   └── clean_dataset.py
+    │   │
     │   └── model        - scripts to train models and make predictions
-    │       ├── predict_model.py
     │       └── train_model.py
     │
     └── tests            - pytest
@@ -127,7 +129,7 @@ Deploying inference service to AWS Lambda
 2. Run `sam deploy --guiChange this portion for other types of models
 
 ## Add the correct type hinting when completed
-
+make_dataset
 `aws cloudformation delete-stack --stack-name <STACK_NAME_ON_CREATION>`
 
 Made by <https://github.com/arthurhenrique/cookiecutter-fastapi/graphs/contributors> with ❤️
