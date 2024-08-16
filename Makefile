@@ -58,4 +58,4 @@ clean:
 	rm -rf docs/_build
 
 train:
-	python ml/pipeline.py
+	poetry run python ml/pipeline.py
