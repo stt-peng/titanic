@@ -35,6 +35,10 @@ make install
 
 `make test`
 
+## Running Train
+
+`make train`
+
 ## Access Swagger Documentation
 
 > <http://localhost:8080/docs>
