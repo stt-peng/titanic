@@ -1,4 +1,4 @@
-FROM python:3.11.0
+FROM python:3.10.0
 
 ENV PYTHONUNBUFFERED 1
 
@@ -17,5 +17,9 @@ COPY ./ml/model/ ./ml/model/
 
 ENV PYTHONPATH "${PYTHONPATH}:/app"
 
+LABEL com.datadoghq.tags.service="titanic"
+LABEL com.datadoghq.tags.env="dev"
+LABEL com.datadoghq.tags.version="1.0.0"
+
 EXPOSE 8080
-CMD uvicorn main:app --host 0.0.0.0 --port 8080
+CMD ddtrace-run uvicorn main:app --host 0.0.0.0 --port 8080 --log-level trace

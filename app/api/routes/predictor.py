@@ -1,9 +1,11 @@
 import json
+from typing import Any
 
 import joblib
 import pandas as pd
 from core.config import INPUT_EXAMPLE
 from fastapi import APIRouter, HTTPException
+from loguru import logger
 from models.prediction import (HealthResponse, MachineLearningDataInput,
                                MachineLearningDataInputList,
                                MachineLearningResponse)
@@ -12,10 +14,12 @@ from services.predict import MachineLearningModelHandlerScore as model
 router = APIRouter()
 
 
-# Change this portion for other types of models
-# Add the correct type hinting when completed
-def get_prediction(data_point: pd.DataFrame):
+def get_prediction(data_point: pd.DataFrame) -> Any:
     return model.predict(data_point, load_wrapper=joblib.load, method="predict")
+
+
+def get_test_data() -> pd.DataFrame:
+    return pd.read_csv("data/test.csv")
 
 
 @router.post(
@@ -33,6 +37,7 @@ async def predict(data_input: MachineLearningDataInput):
         prediction = get_prediction(data_point)
 
     except Exception as err:
+        logger.error(f"Exception: {err}")
         raise HTTPException(status_code=500, detail=f"Exception: {err}")
 
     return MachineLearningResponse(prediction=prediction)
@@ -69,7 +74,7 @@ async def predict(data_input: MachineLearningDataInputList):
             status_code=404, detail="'data_input' argument invalid!")
     try:
         id_data = data_input.get_data()
-        raw_data = pd.read_csv("app/data/test.csv")
+        raw_data = get_test_data()
         if any(id not in raw_data["PassengerId"].to_list() for id in id_data):
             raise ValueError('Check IDs')
         data_point = MachineLearningDataInput(**raw_data[raw_data["PassengerId"].isin(
@@ -77,6 +82,7 @@ async def predict(data_input: MachineLearningDataInputList):
         prediction = get_prediction(data_point)
 
     except Exception as err:
+        logger.error(f"Exception: {err}")
         raise HTTPException(status_code=500, detail=f"Exception: {err}")
 
     return MachineLearningResponse(prediction=prediction)
