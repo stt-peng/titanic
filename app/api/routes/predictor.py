@@ -4,6 +4,7 @@ import joblib
 import pandas as pd
 from core.config import INPUT_EXAMPLE
 from fastapi import APIRouter, HTTPException
+from loguru import logger
 from models.prediction import (HealthResponse, MachineLearningDataInput,
                                MachineLearningDataInputList,
                                MachineLearningResponse)
@@ -33,6 +34,7 @@ async def predict(data_input: MachineLearningDataInput):
         prediction = get_prediction(data_point)
 
     except Exception as err:
+        logger.error(f"Exception: {err}")
         raise HTTPException(status_code=500, detail=f"Exception: {err}")
 
     return MachineLearningResponse(prediction=prediction)
@@ -77,6 +79,7 @@ async def predict(data_input: MachineLearningDataInputList):
         prediction = get_prediction(data_point)
 
     except Exception as err:
+        logger.error(f"Exception: {err}")
         raise HTTPException(status_code=500, detail=f"Exception: {err}")
 
     return MachineLearningResponse(prediction=prediction)
