@@ -23,6 +23,10 @@ source venv/bin/activate
 make install
 ```
 
+## Running Train
+
+`make train`
+
 ## Runnning Localhost
 
 `make run`
@@ -34,10 +38,6 @@ make install
 ## Running Tests
 
 `make test`
-
-## Running Train
-
-`make train`
 
 ## Access Swagger Documentation
 
