@@ -88,3 +88,5 @@ data/*/*.csv
 
 # Mypy cache
 .mypy_cache/
+
+*.zip
