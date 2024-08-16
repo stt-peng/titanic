@@ -1,11 +1,14 @@
+from dotenv import find_dotenv, load_dotenv
 from loguru import logger
 from sklearn.ensemble import RandomForestClassifier
 
-from ml.data import make_dataset
 from ml.features import build_features
 from ml.model import train_model
 from ml.preprocessing import clean_dataset
 
+load_dotenv(find_dotenv())
+
+from ml.data import make_dataset
 
 class Pipeline:
     def __init__(self) -> None:

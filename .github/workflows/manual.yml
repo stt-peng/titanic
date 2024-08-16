@@ -19,17 +19,17 @@ jobs:
     steps:
     # Runs a single command using the runners shell
     - uses: actions/checkout@v4
-    - name: Create envfile
-      env:
-        ENV_FILE: ${{ secrets.ENV_FILE }}
-      run: |
-        echo $ENV_FILE | base64 --decode > .env
     - uses: actions/setup-python@v5
       with:
         python-version: '3.10'
     - name: Install dependencies
       run: |
         make install
+    - name: Create envfile
+      env:
+        ENV_FILE: ${{ secrets.ENV_FILE }}
+      run: |
+        echo $ENV_FILE | base64 --decode > .env
     - name: Train model
       run: |
         make train
