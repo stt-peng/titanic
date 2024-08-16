@@ -17,7 +17,7 @@ def mock_model():
     return MagicMock()
 
 
-class TestMachineLearningModelHandlerScore():
+class TestMachineLearningModelHandlerScore:
 
     @staticmethod
     def test_predict_calls_method_if_exists(mock_load_wrapper, mock_model):

@@ -7,8 +7,9 @@ from app.main import app
 
 client = TestClient(app)
 
+
 @patch("services.predict.MODEL_NAME", "dummy_model.pkl")
-class TestApp():
+class TestApp:
 
     @staticmethod
     def test_health(mock_model):

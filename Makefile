@@ -56,3 +56,6 @@ clean:
 	rm -rf htmlcov
 	rm -rf .tox/
 	rm -rf docs/_build
+
+train:
+	python ml/pipeline.py
